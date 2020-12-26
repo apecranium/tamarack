@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "tamarack.h"
+#include "interpreter.h"
 
 static char *get_line(void)
 {
@@ -39,6 +40,7 @@ static void do_file(const char *path)
     size_t bytes_read = fread(buf, sizeof(char), size, file);
     buf[bytes_read] = '\0';
     fclose(file);
+    interpret(buf);
 }
 
 static void do_repl(void)
@@ -48,7 +50,7 @@ static void do_repl(void)
     {
         if (strlen(line) > 0)
         {
-            printf("%s\n", line);
+            interpret(line);
         }
         free(line);
     }
